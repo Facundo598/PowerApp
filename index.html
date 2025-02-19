@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Power App</title>
+	<style>
+      	h1, h2, h3 {color: #800390;}
+		.responsive-image {display: block;margin: 0 auto;max-width: 80%;height: auto;}
+		.c-naranja {background-color: #e1b2e7;padding: 10px;border-radius: 15px;
+			    max-width: 85%;margin: 0 auto 0 5%; /*S-D-Inf-Iz*/}
+		.c-gris {background-color: #E3E4E5;padding: 10px;border-radius: 15px;max-width: 85%;
+			 margin: 0 auto 0 5%; /*S-D-Inf-Iz*/}
+      	.c-blanco {background-color: #f4f4f4; text-align: center; padding: 10px;
+        border-radius: 15px;max-width: 85%;margin: 0 auto 0 5%;}
+	</style>
+	<script>
+		function CargarImagen(url) {window.open(url, '_blank');}
+	</script>
+</head>
+<body style="background-color: #f4f4f4">
+  <div class="c-blanco">
+  <h1>Tutorial: Crear una aplicación en Power Apps para enviar datos a Excel</h1>
+    <p style="text-align: left">En este tutorial, crearemos una aplicación en <strong>Power Apps</strong> que permitirá a los usuarios ingresar datos y enviarlos automáticamente a un archivo de <strong>Excel</strong> almacenado en la nube de <strong>Office 365</strong>.</p><br>
+  </div>
+  
+  <div class="c-naranja">
+    <h2>1. Preparar el archivo de Excel</h2>
+        <ul>
+            <li>Abre <strong>Excel</strong> y crea una hoja de cálculo.</li>
+            <li>Define los encabezados de la tabla (ejemplo: 
+              <strong>Fecha, Nombre, Dato1, Dato2, Texto1, Texto2</strong>).</li><br>
+          		<img src="Img/000_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+            <li>Convierte el rango en una <strong>tabla</strong></li><br>
+          		<img src="Img/001_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+            <li>Guarda el archivo en <strong>OneDrive</strong>.</li>
+        </ul>
+    </div><br>
+  
+  <div class="c-naranja">
+    <h2>2. Crear una nueva aplicación en Power Apps</h2>
+        <ol>
+            <li>Ingresa a <strong>Power Apps</strong>.</li>
+            <li>Crea un nuevo proyecto en blanco seleccionando <strong>"Aplicación vacía"</strong>.</li>
+            <li>Escoge la opción <strong>"Aplicación de lienzo en blanco"</strong>.</li>
+            <li>Se abrirá el entorno de edición de Power Apps.</li><br>
+          		<img src="Img/002_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+        </ol>
+  </div><br>
+  
+  <div class="c-naranja">
+    <h2>3. Configurar la apariencia de la aplicación</h2>
+        <h3>3.1. Definir la orientación de la pantalla</h3>
+        <p>Ve a <strong>Configuración</strong> → <strong>Mostrar</strong> y ajusta la orientación.</p><br>
+    		<img src="Img/003_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+
+        <h3>3.2. Cambiar el color de fondo</h3>
+        <p>Selecciona la pantalla principal (<code>Screen1</code>) y en el panel de propiedades ajusta 
+          el color de fondo.</p><br>
+          		<img src="Img/004_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+
+        <h3>3.3. Agregar una imagen de fondo (opcional)</h3>
+        <p>Inserta una imagen desde <strong>Insertar</strong> → 
+          <strong>Multimedia</strong> → <strong>Imagen</strong>. 
+          Ajusta la transparencia (ejemplo: <code>0.7</code>).</p><br>
+          		<img src="Img/005_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+  </div><br>
+  
+  <div class="c-naranja">
+    <h2>4. Agregar elementos de entrada de datos</h2>
+        <ul>
+            <li><strong>Etiquetas de texto</strong> → Para indicar qué debe ingresar el usuario.</li>
+            <li><strong>Entradas de texto</strong> → Para los campos de <strong>Nombre, Dato1, Dato2, 
+              Texto1 y Texto2</strong>.</li>
+            <li><strong>Selector de fecha</strong> → Para el campo <strong>Fecha</strong>.</li><br>
+          		<img src="Img/006_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+            <li><strong>Botón ("Enviar")</strong> → Para guardar los datos en Excel.</li><br>
+          		<img src="Img/007_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+        </ul>
+  </div><br>
+  
+  <div class="c-naranja">
+    <h2>5. Conectar la aplicación con Excel</h2>
+        <ol>
+            <li>En la parte superior, selecciona <strong>"Agregar datos"</strong>.</li>
+            <li>Escoge el conector <strong>"Excel Online (Empresas)"</strong>.</li><br>
+          		<img src="Img/008_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+            <li>Selecciona <strong>"OneDrive for Business"</strong></li>
+            <li>Busca y elige el archivo de <strong>Excel</strong>.</li>
+            <li>Selecciona la tabla dentro del archivo.</li><br>
+          		<img src="Img/009_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+        </ol>
+  </div><br>
+  
+  <div class="c-naranja">
+    <h2>6. Configurar el botón para enviar datos a Excel</h2>
+        <p>Selecciona el botón <strong>"Enviar"</strong> y en la propiedad <code>OnSelect</code>, escribe el siguiente código:</p>
+        <pre>
+Patch(
+    Tabla1; 
+    Defaults(Tabla1); 
+    {
+        'Fecha': DateFecha.SelectedDate;
+        'Nombre': TNombre.Text;
+        'Dato1': TDato1.Text;  
+        'Dato2': TDato2.Text;  
+        'Texto1': TTexto1.Text;
+        'Texto2': TTexto2.Text
+    }
+)</pre>
+    <br><img src="Img/010_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+  </div><br>
+  
+  <div class="c-naranja">
+    <h2>7. Guardar, probar y compartir la aplicación</h2>
+        <ul>
+            <li><strong>Guardar el proyecto</strong> en Power Apps.</li>
+            <li><strong>Vista previa</strong>: completa los campos y presiona <strong>"Enviar"</strong> para probar.</li>
+            <li><strong>Compartir la aplicación</strong> con los usuarios que ingresarán datos.</li>
+        </ul>
+
+        <p><strong>Importante:</strong> Asegúrate de dar permisos de edición en el archivo de <strong>Excel</strong> a los usuarios que utilizarán la app.</p>
+    <br>
+          		<img src="Img/009_PowerApp.jpg" alt="Descripción de la imagen" class="responsive-image"><br>
+
+        <p>Con esto, habrás creado una aplicación funcional en <strong>Power Apps</strong> para ingresar datos y guardarlos en un archivo <strong>Excel en la nube</strong>. 🚀</p>
+  </div><br>
+  
+
+</body>
+</html>
